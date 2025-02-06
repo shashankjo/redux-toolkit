@@ -10,15 +10,15 @@ function orderCake() {
   }
 }
 
-const intialState = {
+const initialState = {
   numOfCakes: 10
 }
 
 // Reducers specify how the app's state changes in response to actions sent to the store
 // A reducer accepts state and action as arguments, and returns the next state of the application
 
-const reducer = (state = intialState, acttion) => {
-  switch (acttion.type) {
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
     case CAKE_ORDERED:
       return {
         ...state,
