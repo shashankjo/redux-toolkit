@@ -1,6 +1,10 @@
 const redux = require('redux')
+const reduxLogger = require('redux-logger')
+
 const createStore = redux.createStore
 const combineReducers = redux.combineReducers
+const logger = reduxLogger.createLogger()
+const applyMiddleware = redux.applyMiddleware
 
 const CAKE_ORDERED = 'CAKE_ORDERED'
 const CAKE_RESTOCKED = 'CAKE_RESTOCKED'
@@ -92,16 +96,14 @@ const rootReducer = combineReducers({
 
 // Responsibilties of a redux store
 // 1. Holds application state, via a reducer
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(logger))
 
 // 2. Allows access to state via getState()
 console.log('Initial state', store.getState())
 
 // 3. Registers listeners via subscribe(listener).
 // subscribe() is called automaticlly whenever the app state is updated by action dispatch
-const unsubscribe = store.subscribe(() =>
-  console.log('Updated state', store.getState())
-)
+const unsubscribe = store.subscribe(() => {})
 
 // 4. Allows state to be updated via dispatch(action)
 store.dispatch(orderCake())
