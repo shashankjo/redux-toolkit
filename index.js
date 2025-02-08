@@ -2,6 +2,7 @@ const redux = require('redux')
 const createStore = redux.createStore
 
 const CAKE_ORDERED = 'CAKE_ORDERED'
+const CAKE_RESTOCKED = 'CAKE_RESTOCKED'
 
 // an Action is an object that contains a type property, but it can contain more properties as well
 // Action creator is a function that returns the Action object
@@ -10,6 +11,13 @@ function orderCake() {
   return {
     type: CAKE_ORDERED,
     quantity: 10
+  }
+}
+
+function restockCake(qty = 1) {
+  return {
+    type: CAKE_RESTOCKED,
+    payload: qty
   }
 }
 
@@ -26,6 +34,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         numOfCakes: state.numOfCakes - 1
+      }
+      case CAKE_RESTOCKED:
+      return {
+        ...state,
+        numOfCakes: state.numOfCakes + action.payload
       }
     default:
       return state
@@ -49,6 +62,8 @@ const unsubscribe = store.subscribe(() =>
 store.dispatch(orderCake())
 store.dispatch(orderCake())
 store.dispatch(orderCake())
+
+store.dispatch(restockCake(3))
 
 // 5. Handles unregistering of listeners via the function returned by subscribe(listener)
 unsubscribe()
